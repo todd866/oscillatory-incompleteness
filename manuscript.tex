@@ -55,7 +55,7 @@ This connects several strands of existing work:
     \item Neural oscillations as computational substrates \citep{buzsaki2006}
 \end{itemize}
 
-The novelty lies in the interpretation: we frame incompleteness as arising specifically from the \emph{dimensional mismatch} between oscillatory dynamics and symbolic codes, offering a physical and information-theoretic reading of what is usually treated as a purely logical phenomenon.
+The novelty lies in the interpretation. Prior work establishes undecidability \emph{within} dynamical systems: Moore showed certain trajectory properties are undecidable; Platzer proved incompleteness for differential dynamic logic. Our contribution is different: we argue that incompleteness afflicts \emph{any theory describing symbol formation from oscillatory dynamics}, not just the dynamics themselves. The dimensional bottleneck---the compression from continuous state space to discrete symbols---creates the structural conditions for Gödelian self-reference. This offers a physical and information-theoretic reading of what is usually treated as a purely logical phenomenon.
 
 \section{Oscillatory Systems and Symbol Formation}
 
@@ -83,6 +83,8 @@ This captures the essential structure: continuous oscillatory dynamics in high-d
 
 The partition $\mathcal{P}$ implements a \emph{dimensional bottleneck}: the state space $X$ has dimension $n$ (potentially large), while the observation at each time step yields only $\log_2 k$ bits of information. This compression is where information is lost and---we argue---where the seeds of incompleteness are planted.
 
+To be clear: we do not claim that dimensional compression \emph{mechanistically causes} incompleteness. Rather, the bottleneck creates the \emph{structural conditions}---symbolic finitude combined with arithmetic expressivity---that make Gödelian phenomena unavoidable. Once the system is rich enough to encode arithmetic through its symbol sequences, and those sequences emerge from coarse-graining of continuous dynamics, incompleteness follows by standard logical arguments. The bottleneck is where continuous physics meets discrete logic.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{figures/fig1_vdp_symbols.png}
@@ -103,7 +105,9 @@ There exist oscillatory symbol-generating systems $\mathcal{S}$ such that for an
 \end{lemma}
 
 \begin{proof}[Proof sketch]
-This follows from results showing that smooth dynamical systems can simulate Turing machines. \citet{moore1990} constructed a particle in a 3D potential whose trajectory encodes the computation of any TM. \citet{platzer2012} showed that natural numbers are definable in differential dynamic logic via zeros of sinusoidal functions. We inherit arithmetic encoding from these constructions.
+This follows from results showing that continuous dynamical systems can simulate Turing machines. \citet{moore1990} constructed a particle in a 3D potential whose trajectory encodes the computation of any TM. \citet{platzer2012} showed that natural numbers are definable in differential dynamic logic via zeros of sinusoidal functions. \citet{siegelmann1995} proved that recurrent neural networks with rational weights are Turing-complete; oscillatory networks with appropriate coupling can implement equivalent dynamics.
+
+Importantly, this is \emph{logical} undecidability, not merely chaotic unpredictability. Even with perfect knowledge of initial conditions and dynamics, there exist properties of the symbol stream that no consistent effective theory can decide---because the theory cannot contain a complete model of its own provability predicate when applied to the system's self-referential capacities.
 \end{proof}
 
 \section{The Oscillatory Incompleteness Theorem}
@@ -138,7 +142,7 @@ If $T \vdash G$, then by soundness $G$ is true, so $T$ cannot prove $P^*(s(x^*))
 
 \section{Categorical Perspective: Coalgebras and Final Coalgebras}
 
-The framework admits an elegant categorical reformulation.
+The framework admits an elegant categorical reformulation. Coalgebras provide the canonical categorical framework for systems that generate streams; the final coalgebra $\Sigma^\mathbb{N}$ is the natural home of symbol sequences. This perspective connects our oscillatory incompleteness to established categorical proofs of Gödel's theorem.
 
 \subsection{OscSys as Coalgebras}
 
@@ -177,6 +181,8 @@ Consider a network of $n$ coupled neural oscillators (e.g., Kuramoto model):
 
 With a phase-binning partition and discrete sampling, this generates symbol sequences. If the network is large and richly connected, it can---in principle---implement universal computation.
 
+The symbolic partition corresponds to neurophysiologically meaningful discretizations: phase-coded representations, gamma-cycle binding windows, discrete firing events, or categorical cell-assembly activations \citep{buzsaki2006}. These are not arbitrary coarse-grainings but reflect how neural systems naturally segment continuous dynamics into discrete computational tokens.
+
 \subsection{Implications for Theories of Mind}
 
 Theorem~\ref{thm:main} then implies: any consistent effective theory of neural information processing, if it is rich enough to capture what brains actually compute, is necessarily incomplete. There are true facts about the symbol sequences neural dynamics generate that no such theory can prove.
@@ -199,6 +205,8 @@ Every living system is an oscillatory code-forming system:
 In each case, continuous high-dimensional dynamics pass through measurement/observation bottlenecks to yield discrete symbolic descriptions. Theorem~\ref{thm:main} applies: any sufficiently rich theory of these systems is incomplete.
 
 \subsection{Cosmological Speculation}
+
+\emph{This section is speculative and offered only to illustrate the generality of the framework.}
 
 A more speculative extension: the universe itself as an oscillatory code-forming system.
 
@@ -246,7 +254,12 @@ This research did not receive specific funding.
 The author declares no competing interests.
 
 \section*{Data Availability}
-Simulation code is available at [GitHub URL].
+Simulation code is available at \url{https://github.com/todd866/oscillatory-incompleteness}. The repository includes:
+\begin{itemize}
+    \item \texttt{osc\_symbols.py}: Van der Pol oscillator generating symbol sequences (Figure~\ref{fig:vdp})
+    \item \texttt{kuramoto\_compute.py}: Kuramoto network phase encoding demonstration
+    \item \texttt{godel\_oscillator.py}: Self-referential oscillator implementation (Appendix B)
+\end{itemize}
 
 \bibliography{references}
 
