@@ -77,9 +77,11 @@ def generate_bottleneck_diagram():
                 '-', lw=2, color=funnel_color)
 
     # Annotations for the Process
-    ax_mid.text(center_x + 1.2, 4.5, r"2. Measurement ($\mathcal{P}$)",
+    ax_mid.text(center_x + 1.5, 4.6, r"2. Measurement ($\mathcal{P}$)",
                 fontsize=12, fontweight='bold', color='#333333')
-    ax_mid.text(center_x + 1.2, 4.2, "Dimensional Bottleneck\n(Information Loss)",
+    ax_mid.text(center_x + 1.5, 4.0, "Dimensional Bottleneck",
+                fontsize=10, style='italic', color='#555555')
+    ax_mid.text(center_x + 1.5, 3.6, "(Information Loss)",
                 fontsize=10, style='italic', color='#555555')
 
     # Arrow indicating flow of information
