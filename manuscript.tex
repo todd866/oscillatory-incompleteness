@@ -83,12 +83,19 @@ This captures the essential structure: continuous oscillatory dynamics in high-d
 
 The partition $\mathcal{P}$ implements a \emph{dimensional bottleneck}: the state space $X$ has dimension $n$ (potentially large), while the observation at each time step yields only $\log_2 k$ bits of information. This compression is where information is lost and---we argue---where the seeds of incompleteness are planted.
 
-To be clear: we do not claim that dimensional compression \emph{mechanistically causes} incompleteness. Rather, the bottleneck creates the \emph{structural conditions}---symbolic finitude combined with arithmetic expressivity---that make Gödelian phenomena unavoidable. Once the system is rich enough to encode arithmetic through its symbol sequences, and those sequences emerge from coarse-graining of continuous dynamics, incompleteness follows by standard logical arguments. The bottleneck is where continuous physics meets discrete logic.
+To be clear: we do not claim that dimensional compression \emph{mechanistically causes} incompleteness. Rather, the bottleneck creates the \emph{structural conditions}---symbolic finitude combined with arithmetic expressivity---that make Gödelian phenomena unavoidable. Once the system is rich enough to encode arithmetic through its symbol sequences, and those sequences emerge from coarse-graining of continuous dynamics, incompleteness follows by standard logical arguments. The bottleneck is where continuous physics meets discrete logic. Figure~\ref{fig:bottleneck} illustrates this schematically.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig2_bottleneck.png}
+\caption{The Dimensional Bottleneck. (1) A trajectory evolves in a high-dimensional continuous state space $X \subseteq \mathbb{R}^n$. (2) A coarse partition $\mathcal{P}$ acts as a dimensional bottleneck, collapsing the continuous dynamics into a small number of observable regions and discarding information. (3) The resulting output is a discrete symbol sequence $s(x_0) \in \Sigma^{\mathbb{N}}$. Theorem~\ref{thm:main} shows that whenever this symbolic layer can encode arithmetic, any effective theory of the symbol sequences is necessarily incomplete.}
+\label{fig:bottleneck}
+\end{figure}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{figures/fig1_vdp_symbols.png}
-\caption{Van der Pol oscillator generating symbol sequences via quadrant partition. Top left: phase portrait with partition regions. Top right: continuous time series. Bottom left: resulting symbol sequence. Bottom right: symbol statistics.}
+\caption{Concrete example: Van der Pol oscillator generating symbol sequences via quadrant partition. Top left: phase portrait with partition regions $\mathcal{P}$. Top right: continuous time series $x(t), y(t)$. Bottom left: first 500 symbols of the induced sequence $s(x_0) \in \Sigma^{\mathbb{N}}$. Bottom right: symbol statistics showing the information-theoretic compression from the high-dimensional flow to the low-dimensional tape.}
 \label{fig:vdp}
 \end{figure}
 
@@ -108,6 +115,8 @@ There exist oscillatory symbol-generating systems $\mathcal{S}$ such that for an
 This follows from results showing that continuous dynamical systems can simulate Turing machines. \citet{moore1990} constructed a particle in a 3D potential whose trajectory encodes the computation of any TM. \citet{platzer2012} showed that natural numbers are definable in differential dynamic logic via zeros of sinusoidal functions. \citet{siegelmann1995} proved that recurrent neural networks with rational weights are Turing-complete; oscillatory networks with appropriate coupling can implement equivalent dynamics.
 
 Importantly, this is \emph{logical} undecidability, not merely chaotic unpredictability. Even with perfect knowledge of initial conditions and dynamics, there exist properties of the symbol stream that no consistent effective theory can decide---because the theory cannot contain a complete model of its own provability predicate when applied to the system's self-referential capacities.
+
+The accompanying code demonstrations (Kuramoto networks implementing logic gates) illustrate how oscillatory dynamics can encode computational operations, but the \emph{universality} claim in this lemma relies entirely on the cited constructions in the literature, not on our specific implementations.
 \end{proof}
 
 \section{The Oscillatory Incompleteness Theorem}
@@ -187,7 +196,7 @@ The symbolic partition corresponds to neurophysiologically meaningful discretiza
 
 Theorem~\ref{thm:main} then implies: any consistent effective theory of neural information processing, if it is rich enough to capture what brains actually compute, is necessarily incomplete. There are true facts about the symbol sequences neural dynamics generate that no such theory can prove.
 
-This is not a limitation of current neuroscience but a structural feature of oscillatory code-forming systems. The ``art'' of clinical judgment, the irreducibility of expert intuition, the limits of algorithmic psychiatry---these may reflect not ignorance but genuine incompleteness.
+This suggests that aspects of expert clinical judgment may reflect a kind of \emph{computational irreducibility}: if the brain is a high-dimensional oscillatory system and clinical language is a low-dimensional symbolic code, then in some cases the only way to ``know'' the outcome is to let the system unfold in time, rather than deriving it within a fixed low-dimensional theory. The limits of algorithmic psychiatry may thus reflect structural constraints on oscillatory code-forming systems, not merely gaps in current knowledge.
 
 \section{Beyond Neural Systems: Universal Scope}
 
@@ -256,9 +265,10 @@ The author declares no competing interests.
 \section*{Data Availability}
 Simulation code is available at \url{https://github.com/todd866/oscillatory-incompleteness}. The repository includes:
 \begin{itemize}
+    \item \texttt{bottleneck\_diagram.py}: Conceptual schematic (Figure~\ref{fig:bottleneck})
     \item \texttt{osc\_symbols.py}: Van der Pol oscillator generating symbol sequences (Figure~\ref{fig:vdp})
     \item \texttt{kuramoto\_compute.py}: Kuramoto network phase encoding demonstration
-    \item \texttt{godel\_oscillator.py}: Self-referential oscillator implementation (Appendix B)
+    \item \texttt{godel\_oscillator.py}: Self-referential oscillator implementation (Figure~\ref{fig:godel}, Appendix B)
 \end{itemize}
 
 \bibliography{references}
@@ -367,7 +377,7 @@ The Gödel construction can be given a dynamical interpretation.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/fig3_godel_oscillator.png}
-\caption{The self-referential (``Gödel'') oscillator. Top: phase evolution showing irregular dynamics as the system avoids its own predictions. Middle: frequency modulation driven by self-referential feedback. Bottom: resulting symbol sequence. The system maintains an n-gram model of its symbol history, predicts its next output, then adjusts frequency to evade that prediction---physically instantiating ``this system does not behave as its model predicts.''}
+\caption{A self-referential ``Gödel'' oscillator. The system predicts its next symbol using an internal $n$-gram model and modulates its dynamics to avoid generating that symbol. Top: phase trajectory with partition boundaries. Middle: frequency modulation showing self-referential adjustment (deviations from the base frequency $\omega_0$). Bottom: actual symbol sequence over time. Because the system systematically evades its own predictions, no fixed external theory can correctly predict all future outputs---a physical analogue of the Gödel sentence ``This statement is not provable.''}
 \label{fig:godel}
 \end{figure}
 
