@@ -10,6 +10,7 @@
 \usepackage{setspace}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{booktabs}
 \usepackage[round]{natbib}
 \bibliographystyle{plainnat}
@@ -85,14 +86,14 @@ The partition $\mathcal{P}$ implements a \emph{dimensional bottleneck}: the stat
 
 To be clear: we do not claim that dimensional compression \emph{mechanistically causes} incompleteness. Rather, the bottleneck creates the \emph{structural conditions}---symbolic finitude combined with arithmetic expressivity---that make Gödelian phenomena unavoidable. Once the system is rich enough to encode arithmetic through its symbol sequences, and those sequences emerge from coarse-graining of continuous dynamics, incompleteness follows by standard logical arguments. The bottleneck is where continuous physics meets discrete logic. Figure~\ref{fig:bottleneck} illustrates this schematically.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig2_bottleneck.png}
 \caption{The Dimensional Bottleneck. (1) A trajectory evolves in a high-dimensional continuous state space $X \subseteq \mathbb{R}^n$. (2) A coarse partition $\mathcal{P}$ acts as a dimensional bottleneck, collapsing the continuous dynamics into a small number of observable regions and discarding information. (3) The resulting output is a discrete symbol sequence $s(x_0) \in \Sigma^{\mathbb{N}}$. Theorem~\ref{thm:main} shows that whenever this symbolic layer can encode arithmetic, any effective theory of the symbol sequences is necessarily incomplete.}
 \label{fig:bottleneck}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{figures/fig1_vdp_symbols.png}
 \caption{Concrete example: Van der Pol oscillator generating symbol sequences via quadrant partition. Top left: phase portrait with partition regions $\mathcal{P}$. Top right: continuous time series $x(t), y(t)$. Bottom left: first 500 symbols of the induced sequence $s(x_0) \in \Sigma^{\mathbb{N}}$. Bottom right: symbol statistics showing the information-theoretic compression from the high-dimensional flow to the low-dimensional tape.}
@@ -376,7 +377,7 @@ This is the categorical expression of Gödel incompleteness: there are subobject
 
 The Gödel construction can be given a dynamical interpretation.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/fig3_godel_oscillator.png}
 \caption{A self-referential ``Gödel'' oscillator. The system predicts its next symbol using an internal $n$-gram model and modulates its dynamics to avoid generating that symbol. Top: phase trajectory with partition boundaries. Middle: frequency modulation showing self-referential adjustment (deviations from the base frequency $\omega_0$). Bottom: actual symbol sequence over time. Because the system systematically evades its own predictions, no fixed external theory can correctly predict all future outputs---a physical analogue of the Gödel sentence ``This statement is not provable.''}
