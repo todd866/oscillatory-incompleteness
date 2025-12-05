@@ -1,0 +1,381 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[round]{natbib}
+\bibliographystyle{plainnat}
+\doublespacing
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\title{Oscillatory Incompleteness: Gödel, Symbol Formation, \\
+and High-Dimensional Dynamics}
+
+\author{Ian Todd\\
+Sydney Medical School, University of Sydney\\
+\texttt{itod2305@uni.sydney.edu.au}}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We prove a Gödel-style incompleteness theorem for a broad class of dynamical systems that generate symbolic codes from high-dimensional oscillatory dynamics via coarse-grained observation. Using the established result that such systems can encode arithmetic, we show that any effective theory capable of reasoning about their symbolic outputs is necessarily incomplete: there exist true properties of the generated symbol streams that it cannot decide. We then reinterpret this result philosophically: incompleteness is not merely a feature of formal axiom systems, but a generic consequence of forming symbols from pre-symbolic physical dynamics through dimensional bottlenecks. We illustrate the framework with oscillatory neural models and sketch a categorical reformulation using coalgebras and topos-internal logic. The paper thus links Gödel's theorems to contemporary work on dynamical systems, computation, and the philosophy of neuroscience.
+
+\textbf{Keywords:} Gödel incompleteness; dynamical systems; symbolic dynamics; oscillatory systems; coalgebras; philosophy of mathematics; philosophy of neuroscience
+\end{abstract}
+
+\section{Introduction}
+
+Gödel's incompleteness theorems are typically presented as results about formal axiomatic systems: any consistent, recursively axiomatizable theory strong enough to express basic arithmetic contains true statements it cannot prove \citep{godel1931}. This framing positions incompleteness as a phenomenon of mathematical logic, arising from the self-referential capacities of formal languages.
+
+We argue for a different interpretation. The same incompleteness phenomenon appears---and perhaps more naturally---when we consider \emph{physically realised} symbol-generating systems: dynamical systems whose continuous evolution produces discrete symbol sequences via coarse-grained observation. From this perspective, incompleteness is not a quirk of formal syntax but a structural consequence of \emph{code formation}: the process by which high-dimensional pre-symbolic dynamics are compressed through low-dimensional measurement bottlenecks to yield symbolic representations.
+
+Our main result (Theorem~\ref{thm:main}) shows that for any class of oscillatory systems satisfying minimal conditions---continuous dynamics, symbolic observation via partition, and the capacity to encode arithmetic---any consistent effective theory about their symbolic outputs is necessarily incomplete. There exist true facts about the symbol sequences these systems generate that no such theory can decide.
+
+This connects several strands of existing work:
+\begin{itemize}
+    \item Dynamical systems that simulate Turing machines \citep{moore1990,dacosta1991}
+    \item Differential dynamic logic and incompleteness for ODEs \citep{platzer2012}
+    \item Categorical and topos-theoretic approaches to Gödel's theorems \citep{joyal1995,maietti2010}
+    \item Neural oscillations as computational substrates \citep{buzsaki2006}
+\end{itemize}
+
+The novelty lies in the interpretation: we frame incompleteness as arising specifically from the \emph{dimensional mismatch} between oscillatory dynamics and symbolic codes, offering a physical and information-theoretic reading of what is usually treated as a purely logical phenomenon.
+
+\section{Oscillatory Systems and Symbol Formation}
+
+\subsection{Abstract Framework}
+
+\begin{definition}[Oscillatory Symbol-Generating System]
+An \emph{oscillatory symbol-generating system} (OscSys) is a tuple $\mathcal{S} = (X, \Phi, \mathcal{P}, \Sigma, \Delta)$ where:
+\begin{itemize}
+    \item $X \subseteq \mathbb{R}^n$ is the state space
+    \item $\Phi: \mathbb{R} \times X \to X$ is a continuous flow (the dynamics)
+    \item $\mathcal{P} = \{R_1, \ldots, R_k\}$ is a finite partition of $X$ (the measurement)
+    \item $\Sigma = \{1, \ldots, k\}$ is the symbol alphabet
+    \item $\Delta > 0$ is the sampling interval
+\end{itemize}
+\end{definition}
+
+Given initial condition $x_0 \in X$, the system generates a symbol sequence $s(x_0) = (s_0, s_1, s_2, \ldots) \in \Sigma^\mathbb{N}$ where:
+\begin{equation}
+    s_n = i \quad \text{if} \quad \Phi(n\Delta, x_0) \in R_i
+\end{equation}
+
+This captures the essential structure: continuous oscillatory dynamics in high-dimensional space $X$, observed through a coarse partition $\mathcal{P}$ at discrete times, producing a sequence of symbols.
+
+\subsection{The Dimensional Bottleneck}
+
+The partition $\mathcal{P}$ implements a \emph{dimensional bottleneck}: the state space $X$ has dimension $n$ (potentially large), while the observation at each time step yields only $\log_2 k$ bits of information. This compression is where information is lost and---we argue---where the seeds of incompleteness are planted.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/fig1_vdp_symbols.png}
+\caption{Van der Pol oscillator generating symbol sequences via quadrant partition. Top left: phase portrait with partition regions. Top right: continuous time series. Bottom left: resulting symbol sequence. Bottom right: symbol statistics.}
+\label{fig:vdp}
+\end{figure}
+
+\section{Encoding Arithmetic in Oscillatory Dynamics}
+
+The key technical lemma---established in prior work---is that sufficiently rich oscillatory systems can encode arbitrary computation.
+
+\begin{lemma}[Computational Universality of Oscillatory Systems]
+\label{lem:universal}
+There exist oscillatory symbol-generating systems $\mathcal{S}$ such that for any Turing machine $M$, there exists an initial condition $x_M \in X$ and a property $P_M$ of symbol sequences such that:
+\begin{equation}
+    P_M(s(x_M)) \text{ is true} \iff M \text{ halts}
+\end{equation}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+This follows from results showing that smooth dynamical systems can simulate Turing machines. \citet{moore1990} constructed a particle in a 3D potential whose trajectory encodes the computation of any TM. \citet{platzer2012} showed that natural numbers are definable in differential dynamic logic via zeros of sinusoidal functions. We inherit arithmetic encoding from these constructions.
+\end{proof}
+
+\section{The Oscillatory Incompleteness Theorem}
+
+We now state and prove the main result.
+
+\begin{definition}[Theory of Oscillatory Systems]
+A \emph{theory of oscillatory systems} $T$ is a recursively axiomatizable first-order theory whose language includes:
+\begin{itemize}
+    \item Terms denoting OscSys configurations $(X, \Phi, \mathcal{P}, \Sigma, \Delta)$
+    \item Terms denoting initial conditions $x_0 \in X$
+    \item Predicates about symbol sequences $s(x_0)$
+\end{itemize}
+We say $T$ is \emph{arithmetically adequate} if it proves all true $\Sigma_1$ sentences of arithmetic (as encoded via Lemma~\ref{lem:universal}).
+\end{definition}
+
+\begin{theorem}[Oscillatory Incompleteness]
+\label{thm:main}
+Let $T$ be a consistent, recursively axiomatizable, arithmetically adequate theory of oscillatory systems. Then there exists an OscSys $\mathcal{S}^*$, an initial condition $x^* \in X$, and a property $P^*$ of symbol sequences such that:
+\begin{enumerate}
+    \item $P^*(s(x^*))$ is true (in the standard interpretation)
+    \item $T \nvdash P^*(s(x^*))$
+    \item $T \nvdash \neg P^*(s(x^*))$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By Lemma~\ref{lem:universal}, $T$ can encode arithmetic via the symbolic outputs of oscillatory systems. The standard Gödelian diagonal argument then applies: we construct a sentence $G$ (about symbol sequences of $\mathcal{S}^*$) that effectively asserts ``this symbol sequence has property $P^*$ which $T$ cannot prove.''
+
+If $T \vdash G$, then by soundness $G$ is true, so $T$ cannot prove $P^*(s(x^*))$---contradiction. If $T \vdash \neg G$, then $T$ proves something false (since $G$ is true by construction), contradicting consistency.
+\end{proof}
+
+\section{Categorical Perspective: Coalgebras and Final Coalgebras}
+
+The framework admits an elegant categorical reformulation.
+
+\subsection{OscSys as Coalgebras}
+
+A discrete-time dynamical system with output can be viewed as a coalgebra for the functor $F(X) = \Sigma \times X$:
+\begin{equation}
+    c: X \to \Sigma \times X
+\end{equation}
+where $c(x) = (\text{observe}(x), \text{next}(x))$.
+
+The \emph{final coalgebra} for this functor is $\Sigma^\mathbb{N}$---the space of all infinite symbol sequences. The unique coalgebra morphism from any OscSys to the final coalgebra is precisely our code-formation map $s: X \to \Sigma^\mathbb{N}$.
+
+\subsection{Incompleteness as a Statement about Subobjects}
+
+In a topos-theoretic setting, we can reformulate Theorem~\ref{thm:main} as:
+
+\begin{corollary}
+There exists a subobject $U \hookrightarrow \Sigma^\mathbb{N}$ (a property of symbol streams) such that:
+\begin{enumerate}
+    \item The image $s(x^*)$ lies in $U$
+    \item No formula of theory $T$ classifies $U$ as its extension
+\end{enumerate}
+\end{corollary}
+
+This connects our oscillatory incompleteness to categorical proofs of Gödel's theorem via arithmetic universes \citep{joyal1995,maietti2010}.
+
+\section{Application: Neural Oscillatory Dynamics}
+
+The framework applies directly to neural systems, where oscillatory dynamics are ubiquitous \citep{buzsaki2006}.
+
+\subsection{Neural Oscillations as OscSys}
+
+Consider a network of $n$ coupled neural oscillators (e.g., Kuramoto model):
+\begin{equation}
+    \frac{d\theta_i}{dt} = \omega_i + \frac{K}{n} \sum_{j=1}^n \sin(\theta_j - \theta_i)
+\end{equation}
+
+With a phase-binning partition and discrete sampling, this generates symbol sequences. If the network is large and richly connected, it can---in principle---implement universal computation.
+
+\subsection{Implications for Theories of Mind}
+
+Theorem~\ref{thm:main} then implies: any consistent effective theory of neural information processing, if it is rich enough to capture what brains actually compute, is necessarily incomplete. There are true facts about the symbol sequences neural dynamics generate that no such theory can prove.
+
+This is not a limitation of current neuroscience but a structural feature of oscillatory code-forming systems. The ``art'' of clinical judgment, the irreducibility of expert intuition, the limits of algorithmic psychiatry---these may reflect not ignorance but genuine incompleteness.
+
+\section{Beyond Neural Systems: Universal Scope}
+
+The oscillatory incompleteness framework applies far beyond brains.
+
+\subsection{All Biological Systems}
+
+Every living system is an oscillatory code-forming system:
+\begin{itemize}
+    \item \textbf{Cellular:} Gene regulatory networks exhibit oscillatory dynamics (circadian rhythms, cell cycle, metabolic oscillations). The discrete ``codes'' are protein expression states, developmental fates, cell type identities.
+    \item \textbf{Organismal:} Cardiac rhythms, respiratory cycles, hormonal pulses---all generate discrete physiological states from continuous oscillatory dynamics.
+    \item \textbf{Ecological:} Population cycles, predator-prey oscillations, seasonal rhythms produce discrete ecological events (extinctions, invasions, regime shifts) from continuous dynamics.
+\end{itemize}
+
+In each case, continuous high-dimensional dynamics pass through measurement/observation bottlenecks to yield discrete symbolic descriptions. Theorem~\ref{thm:main} applies: any sufficiently rich theory of these systems is incomplete.
+
+\subsection{Cosmological Speculation}
+
+A more speculative extension: the universe itself as an oscillatory code-forming system.
+
+Physical constants, coupling strengths, and even mathematical structures may be ``frozen codes''---discrete values that crystallised from pre-symbolic dynamics during early cosmological epochs. If the dynamics of the early universe were oscillatory and high-dimensional (as suggested by inflationary cosmology, string landscape scenarios, or cyclic models), and if the observed constants emerged via symmetry breaking or dimensional compactification, then:
+
+\begin{enumerate}
+    \item The ``symbols'' are physical constants, particle masses, coupling strengths
+    \item The ``measurement'' is whatever process selected these values from a continuous landscape
+    \item The ``theory'' is physics itself
+\end{enumerate}
+
+On this view, the incompleteness of physics---the existence of questions physics cannot answer from within its own formalism---is not a contingent limitation but a structural consequence of code formation from pre-physical dynamics.
+
+This remains speculative, but it suggests that Gödelian limits may be cosmologically fundamental rather than merely logical curiosities.
+
+\section{Philosophical Implications}
+
+\subsection{Incompleteness as Dimensional Collapse}
+
+The traditional reading of Gödel emphasises self-reference in formal languages. Our interpretation emphasises \emph{dimensional bottlenecks}: the compression from high-dimensional oscillatory dynamics to low-dimensional symbol sequences.
+
+Every measurement, every observation, every symbol is a projection. The partition $\mathcal{P}$ destroys information about which region of $X$ the trajectory occupies within each $R_i$. This information loss is where undecidable propositions are born.
+
+\subsection{Pre-Symbolic Dynamics as Ontologically Primary}
+
+This suggests a reversal of the usual priority: formal systems are not fundamental, but shadows of richer oscillatory dynamics. Symbols emerge from pre-symbolic substrates through dimensional collapse. Incompleteness is then not a property of axioms but of the code-formation process itself.
+
+\subsection{Implications for AI}
+
+Current AI systems (LLMs, classifiers) operate in fundamentally lower-dimensional regimes than biological neural systems. If human cognition is oscillatory and high-dimensional, and if its symbolic outputs inherit Gödelian limits, then AI systems attempting to model human reasoning face structural barriers beyond mere scale.
+
+\section{Conclusion}
+
+We have shown that Gödel-style incompleteness applies to any class of oscillatory systems that generate symbols via coarse-grained observation and can encode arithmetic. The result is not new in its technical core---it inherits from established work on dynamical systems and computation---but the interpretation is novel: incompleteness arises from the dimensional mismatch between pre-symbolic dynamics and symbolic codes.
+
+This positions Gödel's theorems not as curiosities of mathematical logic but as fundamental constraints on any physical system that forms symbols from high-dimensional oscillatory substrates. Brains, as paradigmatic oscillatory code-forming systems, inherit these limits. So too will any AI architecture rich enough to emulate them.
+
+\section*{Acknowledgments}
+None.
+
+\section*{Funding}
+This research did not receive specific funding.
+
+\section*{Declaration of Competing Interest}
+The author declares no competing interests.
+
+\section*{Data Availability}
+Simulation code is available at [GitHub URL].
+
+\bibliography{references}
+
+\appendix
+
+\section{Detailed Proofs}
+
+\subsection{Proof of Lemma~\ref{lem:universal} (Computational Universality)}
+
+We establish that oscillatory symbol-generating systems can encode arbitrary computation.
+
+\begin{proof}
+The proof proceeds in three steps.
+
+\textbf{Step 1: Encoding natural numbers.}
+Following \citet{platzer2012}, natural numbers can be encoded in the zeros of sinusoidal functions. Consider the system:
+\begin{equation}
+    \frac{dx}{dt} = 1, \quad \frac{dy}{dt} = \cos(2\pi x)
+\end{equation}
+The function $y(t)$ has zeros at $t = 1/4, 3/4, 5/4, \ldots$ The $n$-th zero occurs at $t = (2n-1)/4$. Thus, the natural number $n$ is encoded by the trajectory reaching its $n$-th zero.
+
+With a partition $\mathcal{P}$ that distinguishes $y > 0$ from $y \leq 0$, and sampling at appropriate intervals, the symbol sequence encodes the sequence of zero-crossings, hence encodes $\mathbb{N}$.
+
+\textbf{Step 2: Simulating Turing machines.}
+\citet{moore1990} showed that a particle moving in a 3D piecewise-linear potential can simulate any Turing machine. The construction uses:
+\begin{itemize}
+    \item Particle position to encode tape contents (via binary expansion)
+    \item Particle momentum direction to encode machine state
+    \item Potential barriers to implement state transitions
+\end{itemize}
+
+The trajectory of this system, observed through a suitable partition, generates a symbol sequence that encodes the TM's computation history.
+
+\textbf{Step 3: Reduction to oscillatory systems.}
+The Moore construction uses piecewise-linear dynamics, not smooth oscillators. However, smooth approximations exist. \citet{dacosta1991} showed that polynomial ODEs suffice. Moreover, any continuous dynamical system can be approximated arbitrarily well by oscillatory networks (e.g., Kuramoto systems with appropriate coupling matrices).
+
+Specifically, given any TM $M$, there exists:
+\begin{itemize}
+    \item A Kuramoto-type network with $n$ oscillators and coupling matrix $A$
+    \item A partition $\mathcal{P}$ based on phase regions
+    \item An initial condition $\theta_0 \in [0, 2\pi)^n$
+\end{itemize}
+such that the symbol sequence $s(\theta_0)$ encodes the computation of $M$.
+
+The property $P_M$ is then: ``the symbol sequence eventually contains the halting symbol.'' This is true iff $M$ halts.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:main} (Oscillatory Incompleteness)}
+
+\begin{proof}
+Let $T$ be a consistent, recursively axiomatizable, arithmetically adequate theory of oscillatory systems.
+
+\textbf{Step 1: Gödel numbering.}
+Since $T$ is recursively axiomatizable, we can Gödel-number its formulas. Let $\ulcorner \phi \urcorner$ denote the Gödel number of formula $\phi$. By Lemma~\ref{lem:universal}, Gödel numbers can be encoded as properties of symbol sequences generated by OscSys.
+
+\textbf{Step 2: Representability.}
+Define the predicate $\text{Prov}_T(n)$ to mean ``$n$ is the Gödel number of a formula provable in $T$.'' Since $T$ is recursively axiomatizable, $\text{Prov}_T$ is recursively enumerable, hence representable in $T$ (via the encoding of Lemma~\ref{lem:universal}).
+
+\textbf{Step 3: Diagonal construction.}
+By the diagonal lemma, there exists a formula $G$ (expressible as a property of symbol sequences) such that:
+\begin{equation}
+    T \vdash G \leftrightarrow \neg \text{Prov}_T(\ulcorner G \urcorner)
+\end{equation}
+
+In oscillatory terms: $G$ asserts ``the symbol sequence of $\mathcal{S}^*$ has property $P^*$, where $P^*$ is not provable in $T$.''
+
+\textbf{Step 4: Incompleteness.}
+\begin{itemize}
+    \item Suppose $T \vdash G$. Then $\text{Prov}_T(\ulcorner G \urcorner)$ is true. By the fixed-point property, $T \vdash \neg G$, contradicting consistency.
+    \item Suppose $T \vdash \neg G$. Then $T \vdash \text{Prov}_T(\ulcorner G \urcorner)$. But if $T$ is $\Sigma_1$-sound, this means $G$ is provable, so $T \vdash G$, contradiction.
+\end{itemize}
+
+Therefore $T \nvdash G$ and $T \nvdash \neg G$. Since $G$ is equivalent to a statement about symbol sequences of $\mathcal{S}^*$, the theorem is proved.
+\end{proof}
+
+\subsection{Proof of Corollary (Categorical Formulation)}
+
+\begin{proof}
+We work in the topos $\mathbf{Set}$ (the argument generalizes to other topoi with natural number objects).
+
+\textbf{Step 1: Coalgebraic setup.}
+Let $F: \mathbf{Set} \to \mathbf{Set}$ be the functor $F(X) = \Sigma \times X$. An OscSys determines an $F$-coalgebra $(X, c)$ where $c(x) = (\text{observe}(x), \text{next}(x))$.
+
+The final coalgebra for $F$ is $(\Sigma^\mathbb{N}, \text{head} \times \text{tail})$. The unique coalgebra morphism $s: X \to \Sigma^\mathbb{N}$ is our code-formation map.
+
+\textbf{Step 2: Subobjects as properties.}
+A property $P$ of symbol sequences corresponds to a subobject $U \hookrightarrow \Sigma^\mathbb{N}$. The characteristic map $\chi_U: \Sigma^\mathbb{N} \to \Omega$ (where $\Omega = \{0, 1\}$ in $\mathbf{Set}$) classifies membership in $U$.
+
+\textbf{Step 3: Incompleteness as non-definability.}
+By Theorem~\ref{thm:main}, there exists a property $P^*$ (subobject $U^*$) such that:
+\begin{itemize}
+    \item $s(x^*) \in U^*$ (the image lies in $U^*$)
+    \item No formula of $T$ defines $U^*$
+\end{itemize}
+
+In categorical terms: the characteristic map $\chi_{U^*}$ is not representable by any term in the internal language of $T$.
+
+This is the categorical expression of Gödel incompleteness: there are subobjects of the final coalgebra that no effective theory can classify.
+\end{proof}
+
+\section{The Self-Referential Oscillator}
+
+The Gödel construction can be given a dynamical interpretation.
+
+\subsection{Construction}
+
+Consider an oscillator system that:
+\begin{enumerate}
+    \item Generates symbols via phase partition (as in Definition 1)
+    \item Maintains an internal model of its recent symbol history
+    \item Predicts the next symbol using this model
+    \item Adjusts its dynamics to \emph{avoid} the predicted symbol
+\end{enumerate}
+
+Let $h_t = (s_{t-k}, \ldots, s_{t-1})$ be the recent history. Let $\hat{s}_t = f(h_t)$ be the predicted next symbol. The oscillator then modulates its frequency:
+\begin{equation}
+    \omega(t) = \omega_0 + \epsilon \cdot g(\theta(t), \hat{s}_t)
+\end{equation}
+where $g$ steers the phase away from the region corresponding to $\hat{s}_t$.
+
+\subsection{Interpretation}
+
+This system physically instantiates self-reference. The sentence ``$G$ is not provable in $T$'' becomes:
+\begin{quote}
+``My next symbol is not what my internal model predicts.''
+\end{quote}
+
+The system systematically evades its own predictions. Any fixed predictive model of this system is incomplete: the system's actual behavior differs from the model's predictions precisely because the system incorporates and avoids those predictions.
+
+This is Gödelian incompleteness as a dynamical phenomenon rather than a syntactic one.
+
+\end{document}
