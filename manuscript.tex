@@ -73,6 +73,8 @@ An \emph{oscillatory symbol-generating system} (OscSys) is a tuple $\mathcal{S} 
 \end{itemize}
 \end{definition}
 
+\noindent Mathematically, this framework applies to any continuous dynamical system with a coarse-graining partition; we retain the term ``oscillatory'' because our primary physical examples---neural, physiological, cellular---are oscillation-dominated systems.
+
 Given initial condition $x_0 \in X$, the system generates a symbol sequence $s(x_0) = (s_0, s_1, s_2, \ldots) \in \Sigma^\mathbb{N}$ where:
 \begin{equation}
     s_n = i \quad \text{if} \quad \Phi(n\Delta, x_0) \in R_i
@@ -342,7 +344,7 @@ In oscillatory terms: $G$ asserts ``the symbol sequence of $\mathcal{S}^*$ has p
 \textbf{Step 4: Incompleteness.}
 \begin{itemize}
     \item Suppose $T \vdash G$. Then $\text{Prov}_T(\ulcorner G \urcorner)$ is true. By the fixed-point property, $T \vdash \neg G$, contradicting consistency.
-    \item Suppose $T \vdash \neg G$. Then $T \vdash \text{Prov}_T(\ulcorner G \urcorner)$. But if $T$ is $\Sigma_1$-sound, this means $G$ is provable, so $T \vdash G$, contradiction.
+    \item Suppose $T \vdash \neg G$. Then $T \vdash \text{Prov}_T(\ulcorner G \urcorner)$. But if $T$ is arithmetically adequate (Definition 3), this means $G$ is provable, so $T \vdash G$, contradiction.
 \end{itemize}
 
 Therefore $T \nvdash G$ and $T \nvdash \neg G$. Since $G$ is equivalent to a statement about symbol sequences of $\mathcal{S}^*$, the theorem is proved.
