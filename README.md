@@ -1,61 +1,40 @@
 # Oscillatory Incompleteness
 
-**Gödel Incompleteness for Oscillatory Code-Forming Systems: A Dynamical and Categorical Perspective**
+**Gödel, Symbol Formation, and High-Dimensional Dynamics**
 
-> Target journal: *Synthese* (Springer) - covered by USyd Read & Publish
+[![Status](https://img.shields.io/badge/status-submitted-blue)]()
+[![Journal](https://img.shields.io/badge/journal-Synthese-orange)]()
 
-## Core Thesis
+> **Submitted to Synthese** (December 2025) - Manuscript ID: SYNT-S-25-03761
 
-Any physically reasonable class of oscillatory systems that (i) generates symbolic codes via finite-resolution measurement and (ii) can encode arithmetic will inherit Gödel-style incompleteness: there are true facts about their code-producing dynamics that no fixed effective theory of those dynamics can decide.
+## Abstract
 
-The source of undecidable truths is the mismatch between high-dimensional pre-symbolic dynamics and the low-dimensional symbolic interface—i.e., code formation itself.
+We prove a Gödel-style incompleteness theorem for a broad class of dynamical systems that generate symbolic codes from high-dimensional oscillatory dynamics via coarse-grained observation. Using the established result that such systems can encode arithmetic, we show that any effective theory capable of reasoning about their symbolic outputs is necessarily incomplete: there exist true properties of the generated symbol streams that it cannot decide.
 
-## Key Literature
-
-### Dynamical systems + undecidability
-- Moore (1990) "Unpredictability and Undecidability in Dynamical Systems" - particle in 3D potential simulates TM
-- da Costa & Doria (1991) "Undecidability and incompleteness in classical mechanics"
-- Platzer - Differential dynamic logic: Gödel applies to ODEs that can define natural numbers
-
-### Categorical/topos Gödel
-- Joyal - arithmetic universes
-- Maietti, Hofstra - categorical incompleteness proofs
-
-## Paper Structure
-
-1. **Introduction** - Gödel usually about formal syntax; same phenomenon in physically realised symbol-generating systems
-2. **Oscillatory Systems and Symbol Formation** - Define OscSys (state space + flow + observation → symbols)
-3. **Arithmetic in Oscillatory Systems** - Formalise encoding of arithmetic/TMs
-4. **Oscillatory Incompleteness Theorem** - Main result
-5. **Categorical Perspective** - Coalgebras, final coalgebra, topos-internal incompleteness
-6. **Application: Neural Oscillations** - Brains as oscillatory code-forming systems
-7. **Philosophical Implications** - Symbol formation from high-D dynamics as the mechanism behind Gödel
-8. **Conclusion**
-
-## Code Components
-
-1. `osc_symbols.py` - Van der Pol → partition → symbol sequence demo
-2. `kuramoto_compute.py` - Kuramoto network + discrete layer (universal computation)
-3. `godel_oscillator.py` - System whose dynamics depend on its own measured past (self-reference)
+The source of undecidable truths is the *dimensional bottleneck*—the mismatch between high-dimensional pre-symbolic dynamics and the low-dimensional symbolic interface.
 
 ## Repository Structure
 
 ```
-├── manuscript.tex          # Synthese paper draft
+├── manuscript.tex          # Main paper
+├── manuscript.pdf          # Compiled PDF
 ├── references.bib          # Bibliography
 ├── code/
-│   ├── osc_symbols.py      # Oscillator → symbols demo
-│   ├── kuramoto_compute.py # Oscillatory computation
-│   └── godel_oscillator.py # Self-referential oscillator
-├── figures/
-└── archive/
+│   ├── bottleneck_diagram.py   # Figure 1: Dimensional bottleneck schematic
+│   ├── osc_symbols.py          # Figure 2: Van der Pol → symbol sequences
+│   ├── kuramoto_compute.py     # Kuramoto network computation demo
+│   └── godel_oscillator.py     # Figure 3: Self-referential oscillator
+└── figures/
+    ├── fig1_vdp_symbols.png
+    ├── fig2_bottleneck.png
+    └── fig3_godel_oscillator.png
 ```
 
-## Related Projects
+## Key Results
 
-- `1_falsifiability/` - Limits of falsifiability (BioSystems 2025)
-- `6_clinical_validity_bounds/` - Dimensional validity bounds (IJMI, in prep)
-- `15_code_formation/` - Code formation theory
+- **Theorem 4 (Oscillatory Incompleteness):** Any consistent, recursively axiomatizable, arithmetically adequate theory of oscillatory systems is necessarily incomplete.
+
+- **Corollary 5 (Categorical Formulation):** There exist subobjects of the final coalgebra Σ^ℕ that no effective theory can classify.
 
 ## Citation
 
@@ -66,10 +45,11 @@ The source of undecidable truths is the mismatch between high-dimensional pre-sy
              and High-Dimensional Dynamics},
   journal = {Synthese},
   year    = {2025},
-  note    = {In preparation}
+  note    = {Submitted}
 }
 ```
 
 ## Contact
 
 Ian Todd - itod2305@uni.sydney.edu.au
+Sydney Medical School, University of Sydney
